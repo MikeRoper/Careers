@@ -1,0 +1,29 @@
+name: Careers
+author: SwearWord
+main: org.blockface.Careers.Careers
+version: ${project.version}
+depends: Towny
+commands:
+    c:
+        description: Access Careers.
+        usage:
+    crime:
+        description: Access crime.
+        usage:
+permissions:
+    careers.*:
+        description: Gives all career nodes
+        default: op
+        children:
+            careers.employ: true
+            careers.nodisease: true
+            careers.nohell: true
+    careers.employ:
+        description: Allows admins to set careers.
+        default: false
+    careers.nodisease:
+        description: Prevents player from catching diseases.
+        default: false
+    careers.nohell:
+        description: Prevents player from catching diseases.
+        default: false
