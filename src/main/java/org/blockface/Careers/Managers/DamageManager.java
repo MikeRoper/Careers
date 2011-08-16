@@ -28,9 +28,9 @@ public class DamageManager
 	private static Boolean IsProvoker(Player victim, Player provoker)
 	{
 		if(!provokes.keySet().contains(victim)) return false;
-		if(provokes.get(victim).contains(provoker)) return true;
-		return false;
-	}
+        if (provokes.get(victim).contains(provoker))return true;
+        return false;
+    }
 
 	public static void RemoveVictim(Player victim)
 	{
@@ -72,7 +72,7 @@ public class DamageManager
 
     public static void onKill(Player att, Player def)
     {
-        EconomyManager.PlayerPay(def,att,EconomyManager.GetAccount(def).balance()," dying.");
+        EconomyManager.PlayerPay(def,att,EconomyManager.GetAccount(def).balance(),"dying.");
         Career ca = Agency.getCareer(att);
         Career cd = Agency.getCareer(def);
         if(!TownyManager.AreAllies(att,def)) return;

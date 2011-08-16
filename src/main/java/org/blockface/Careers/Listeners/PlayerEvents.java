@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.*;
 
+import java.io.Console;
+
 public class PlayerEvents extends PlayerListener
 {
     @Override
@@ -27,7 +29,7 @@ public class PlayerEvents extends PlayerListener
             event.setRespawnLocation(HellManager.GetSpawn());
             return;
         }
-
+        if(player.hasPermission("careers.nohell")) return;
         HellManager.AddDead(player);
         event.setRespawnLocation(HellManager.GetSpawn());
     }

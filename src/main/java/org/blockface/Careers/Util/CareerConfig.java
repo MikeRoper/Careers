@@ -11,7 +11,6 @@ import java.util.List;
 
 public class CareerConfig
 {
-    private static File directory;
     private static File configfile;
     private static Configuration config;
     private static Plugin plugin;
@@ -19,7 +18,7 @@ public class CareerConfig
     public static void Initialize(Plugin p) throws Exception
     {
         plugin = p;
-        directory = plugin.getDataFolder();
+        File directory = plugin.getDataFolder();
         configfile = new File(directory,"config.yml");
         if(!directory.exists()) directory.mkdir();
         if(!configfile.exists()) configfile.createNewFile();
@@ -42,6 +41,7 @@ public class CareerConfig
         GetTrainCost();
         GetPickables();
         GetHeartCost();
+        GetCureCost();
         GetWeapons();
         config.save();
         Chatty.Info("Loaded Config");
@@ -49,7 +49,7 @@ public class CareerConfig
 
     public static Double GetHeartCost()
     {
-        return config.getDouble("doctor.costperheart",5);
+        return config.getDouble("doctor.costperheart",3);
     }
 
     public static Double GetTrainCost()
@@ -93,8 +93,7 @@ public class CareerConfig
 		int x = config.getInt(world + ".x",spawn.getBlockX());
 		int y = config.getInt(world + ".y",spawn.getBlockY());
 		int z = config.getInt(world + ".z",spawn.getBlockZ());
-		Location result = new Location(w, x, y, z);
-		return result;
+        return new Location(w, x, y, z);
 	}
 
     private static List<String> GetDisabledWorlds()

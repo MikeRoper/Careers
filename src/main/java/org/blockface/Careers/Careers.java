@@ -5,6 +5,7 @@ import org.blockface.Careers.Commands.ComCrime;
 import org.blockface.Careers.Employment.Agency;
 import org.blockface.Careers.Listeners.*;
 import org.blockface.Careers.Managers.CrimeManager;
+import org.blockface.Careers.Managers.HealthManager;
 import org.blockface.Careers.Managers.HellManager;
 import org.blockface.Careers.Managers.JailManager;
 import org.blockface.Careers.Util.CareerConfig;
@@ -13,6 +14,7 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;
+import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -35,6 +37,7 @@ public class Careers extends JavaPlugin
             JailManager.Initialize(this);
             CrimeManager.Initialize(this);
             HellManager.Initialize(this);
+            HealthManager.Initialize(this);
             //Register Events
             RegisterEvents();
         }
@@ -64,6 +67,10 @@ public class Careers extends JavaPlugin
         pm.registerEvent(Event.Type.PLAYER_INTERACT, pe, Event.Priority.Highest, this);
         pm.registerEvent(Event.Type.PLAYER_INTERACT_ENTITY, pe, Event.Priority.Highest, this);
         pm.registerEvent(Event.Type.PLAYER_TELEPORT, pe, Event.Priority.Highest, this);
+
+        //Player Chat Events
+        PlayerChatEvents pc = new PlayerChatEvents();
+        pm.registerEvent(Event.Type.PLAYER_CHAT, pc, Event.Priority.Lowest, this);
 
         //Inventory Events
         pm.registerEvent(Event.Type.FURNACE_SMELT,new InventoryEvents(), Event.Priority.Highest,this);

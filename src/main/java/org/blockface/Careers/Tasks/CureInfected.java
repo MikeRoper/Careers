@@ -1,5 +1,6 @@
 package org.blockface.Careers.Tasks;
 
+import org.blockface.Careers.Managers.HealthManager;
 import org.bukkit.entity.Player;
 
 public class CureInfected implements Runnable
@@ -12,7 +13,6 @@ public class CureInfected implements Runnable
     }
     public void run()
     {
-        //DiseaseManager.HealPlayer(this.player);
-        //To change body of implemented methods use File | Settings | File Templates.
+        HealthManager.CurePlayer(this.player);
     }
 }

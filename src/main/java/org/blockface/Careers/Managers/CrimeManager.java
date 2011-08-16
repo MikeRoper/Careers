@@ -29,7 +29,7 @@ public class CrimeManager
     private static HashMap<Player,Witness> witnesses = new HashMap<Player, Witness>();
     private static HashMap<Player,Crime> wanted = new HashMap<Player,Crime>();
     private static Random random = new Random();
-	private static HashMap<Player,Inmate> jailed = new HashMap<Player,Inmate>();;
+	private static HashMap<Player,Inmate> jailed = new HashMap<Player,Inmate>();
     private static Plugin plugin;
 
     public static void Initialize(Plugin p)
@@ -52,7 +52,7 @@ public class CrimeManager
 
 
         FreeWanted u = new FreeWanted(criminal);
-        Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(plugin,u,20L*60L*5L);
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin,u,20L*60L*5L);
     }
 
     public static void RemoveWanted(Player p)
@@ -76,7 +76,7 @@ public class CrimeManager
         criminal.teleport(JailManager.GetJail(criminal.getWorld()));
 		jailed.put(criminal, new Inmate(criminal,crime,time));
 		Chatty.Broadcast(criminal.getDisplayName() + " has been arrested for " + crime.getType().toString().toLowerCase());
-        Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(plugin,new FreeJailed(criminal),20L*time*60);
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin,new FreeJailed(criminal),20L*time*60);
         EconomyManager.PayWage(officer,50);
     }
 

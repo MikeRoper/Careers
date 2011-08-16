@@ -69,7 +69,7 @@ public class Chatty
 
     public static void Paid(Player source, Player target, double amount, String reason)
     {
-        if(!(reason.equalsIgnoreCase("dying"))) SendMessage(source,"You just paid " + target.getName() + " " + FormatMoney(amount) + " for " + reason);
+        if(!(reason.contains("dying"))) SendMessage(source,"You just paid " + target.getName() + " " + FormatMoney(amount) + " for " + reason);
         SendMessage(target,source.getName() + " just paid you " + FormatMoney(amount) + " for " + reason);
     }
 
