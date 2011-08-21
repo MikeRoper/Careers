@@ -57,6 +57,7 @@ public class Agency
 		if(c.equalsIgnoreCase("Knight")) return new Knight();
 		if(c.equalsIgnoreCase("Tamer")) return new Tamer();
 		if(c.equalsIgnoreCase("Archer")) return new Archer();
+		if(c.equalsIgnoreCase("Assassin")) return new Assassin();
 		return new Bum();
 	}
 

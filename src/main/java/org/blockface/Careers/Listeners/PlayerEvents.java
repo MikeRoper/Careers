@@ -95,6 +95,11 @@ public class PlayerEvents extends PlayerListener
             Agency.TrainCareer(target,player);
             return;
         }
+        if((player.getItemInHand().getType() == Material.BROWN_MUSHROOM || player.getItemInHand().getType() == Material.RED_MUSHROOM) && cp.CanPoison())
+        {
+            DamageManager.PoisonPlayer(player,target);
+            return;
+        }
         if(ct.CanHeal())
         {
             HealthManager.HealPlayer(target,player);
@@ -102,10 +107,22 @@ public class PlayerEvents extends PlayerListener
         }
         if(CrimeManager.IsWanted(target) && cp.CanArrest())
         {
+            if(!TownyManager.AreAllies(player,target))
+            {
+                Chatty.SendImportant(player,"You do not have jurisdiction over " + target.getDisplayName());
+                return;
+            }
             CrimeManager.ArrestPlayer(target,player);
             return;
         }
         if(cp.CanArrest()) CrimeManager.WeaponsArrest(event);
 
+    }
+
+    @Override
+    public void onPlayerQuit(PlayerQuitEvent event)
+    {
+        if(!event.getQuitMessage().contains("left the game")) return;
+        if(DamageManager.IsPoisoned(event.getPlayer())) DamageManager.KillPoisoned(event.getPlayer());
     }
 }

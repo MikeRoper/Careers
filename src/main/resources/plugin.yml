@@ -2,7 +2,6 @@ name: Careers
 author: SwearWord
 main: org.blockface.Careers.Careers
 version: ${project.version}
-depends: Towny
 commands:
     c:
         description: Access Careers.

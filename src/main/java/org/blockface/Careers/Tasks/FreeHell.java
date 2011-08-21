@@ -13,6 +13,7 @@ public class FreeHell implements Runnable
 
     public void run()
     {
+        if(!HellManager.IsDead(player)) return;
         HellManager.SecondChance(player);
     }
 }

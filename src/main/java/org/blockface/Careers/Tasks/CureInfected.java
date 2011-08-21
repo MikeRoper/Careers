@@ -13,6 +13,7 @@ public class CureInfected implements Runnable
     }
     public void run()
     {
+        if(!HealthManager.IsSick(player)) return;
         HealthManager.CurePlayer(this.player);
     }
 }

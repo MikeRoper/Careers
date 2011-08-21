@@ -16,6 +16,12 @@ public class Boss extends Career
 	}
 
     @Override
+    public Boolean CanPoison()
+    {
+        return true;
+    }
+
+    @Override
     public Boolean CanArrow() {
         return true;
     }

@@ -77,13 +77,15 @@ public class HealthManager
     public static void HealPlayer(Player doctor, Player patient)
     {
         int hearts = 20 - patient.getHealth();
-        if(hearts == 0) return;
         double cost = hearts * CareerConfig.GetHeartCost();
         if(IsSick(patient)) cost += CareerConfig.GetCureCost();
-        if(EconomyManager.PlayerPay(patient,doctor,cost," healing."))
+        if(DamageManager.IsPoisoned(patient)) cost += 10;
+        if(cost==0) return;
+        if(EconomyManager.PlayerPay(patient,doctor,cost,"healing."))
         {
             patient.setHealth(20);
             CurePlayer(patient);
+            DamageManager.CurePoisoned(patient);
         }
     }
 

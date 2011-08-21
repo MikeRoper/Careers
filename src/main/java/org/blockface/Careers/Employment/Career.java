@@ -7,6 +7,8 @@ public abstract class Career
 	public abstract String getName();
 	
 	public abstract String getPluralName();
+
+    public abstract Boolean CanPoison();
 	
 	public abstract Boolean CanLockPick();
 	

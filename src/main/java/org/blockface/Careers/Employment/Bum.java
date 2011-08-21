@@ -21,6 +21,11 @@ public class Bum extends Career
     }
 
     @Override
+    public Boolean CanPoison() {
+        return false;
+    }
+
+    @Override
 	public Boolean CanLockPick() 
 	{
 		return false;

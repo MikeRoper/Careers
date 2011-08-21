@@ -25,7 +25,7 @@ public class EconomyManager
         Method.MethodAccount trgacc = GetAccount(target);
         if(!srcacc.hasEnough(amount))
         {
-            Chatty.SendMessage(source,"You do not have enough money.");
+            Chatty.SendImportant(source,"You do not have enough money. You need " + Chatty.FormatMoney(amount - srcacc.balance()));
             return false;
         }
         srcacc.subtract(amount);

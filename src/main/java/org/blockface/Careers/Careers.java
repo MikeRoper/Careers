@@ -4,10 +4,7 @@ import org.blockface.Careers.Commands.ComCareer;
 import org.blockface.Careers.Commands.ComCrime;
 import org.blockface.Careers.Employment.Agency;
 import org.blockface.Careers.Listeners.*;
-import org.blockface.Careers.Managers.CrimeManager;
-import org.blockface.Careers.Managers.HealthManager;
-import org.blockface.Careers.Managers.HellManager;
-import org.blockface.Careers.Managers.JailManager;
+import org.blockface.Careers.Managers.*;
 import org.blockface.Careers.Util.CareerConfig;
 import org.blockface.Careers.Util.Chatty;
 import org.bukkit.World;
@@ -38,8 +35,10 @@ public class Careers extends JavaPlugin
             CrimeManager.Initialize(this);
             HellManager.Initialize(this);
             HealthManager.Initialize(this);
+            DamageManager.Initialize(this);
             //Register Events
             RegisterEvents();
+            TownyManager.LoadTowny(this.getServer().getPluginManager().getPlugin("Towny"));
         }
         catch (Exception failed)
         {
@@ -67,6 +66,7 @@ public class Careers extends JavaPlugin
         pm.registerEvent(Event.Type.PLAYER_INTERACT, pe, Event.Priority.Highest, this);
         pm.registerEvent(Event.Type.PLAYER_INTERACT_ENTITY, pe, Event.Priority.Highest, this);
         pm.registerEvent(Event.Type.PLAYER_TELEPORT, pe, Event.Priority.Highest, this);
+        pm.registerEvent(Event.Type.PLAYER_QUIT, pe, Event.Priority.Highest, this);
 
         //Player Chat Events
         PlayerChatEvents pc = new PlayerChatEvents();

@@ -4,10 +4,13 @@ import org.blockface.Careers.Careers;
 import org.blockface.Careers.Employment.Agency;
 import org.blockface.Careers.Employment.Career;
 import org.blockface.Careers.Objects.Crime;
+import org.blockface.Careers.Tasks.KillPoisoned;
 import org.blockface.Careers.Util.Chatty;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,6 +19,13 @@ public class DamageManager
 {
 
     private static HashMap<Player, HashSet<Player>> provokes = new HashMap<Player, HashSet<Player>>();
+    private static HashMap<Player,Player> poisoned = new HashMap<Player, Player>();
+    private static Careers plugin;
+
+    public static void Initialize(Careers c)
+    {
+        plugin = c;
+    }
 
     private static void addProvoker(Player provoker, Player victim)
 	{
@@ -104,5 +114,54 @@ public class DamageManager
 		}
     }
 
+    public static void PoisonPlayer(Player assassin, Player victim)
+    {
+        if(!Careers.isNight(assassin.getWorld()))
+        {
+            Chatty.SendImportant(assassin,"You may only poison at night.");
+            return;
+        }
+        if(IsPoisoned(victim))
+        {
+            Chatty.SendImportant(assassin,"Victim is already poisoned.");
+            return;
+        }
+        poisoned.put(victim,assassin);
+        CrimeManager.AlertWitnesses(assassin, victim, Crime.CrimeType.POISONING);
+        Chatty.SendImportant(assassin,"You have poisoned " + victim.getName());
+        Chatty.SendImportant(victim,"You have been poisoned. Find a doctor or you will die!");
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin,new KillPoisoned(victim,assassin),20L*60);
+        ItemStack shrooms = assassin.getItemInHand();
+        if(shrooms.getAmount()==1)
+        {
+            assassin.setItemInHand(null);
+            return;
+        }
+        shrooms.setAmount(shrooms.getAmount()-1);
+        assassin.setItemInHand(shrooms);
 
+    }
+
+    public static void CurePoisoned(Player player)
+    {
+        if(!poisoned.containsKey(player)) return;
+        poisoned.remove(player);
+        Chatty.SendMessage(player, "You are no longer poisoned.");
+    }
+
+    public static Boolean IsPoisoned(Player player)
+    {
+        return poisoned.containsKey(player);
+    }
+
+
+    public static void KillPoisoned(Player victim)
+    {
+        if(!IsPoisoned(victim)) return;
+        Player assassin = poisoned.get(victim);
+        victim.damage(20);
+        poisoned.remove(victim);
+        EconomyManager.PlayerPay(victim,assassin,EconomyManager.GetAccount(victim).balance(),"dying.");
+        Chatty.SendImportant(assassin,"Your victim " + victim.getName() + ", has died from poisoning.");
+    }
 }

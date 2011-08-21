@@ -48,7 +48,7 @@ public class HellManager
         dead.remove(p);
         try {
             p.teleport(TownyManager.GetTown(p).getSpawn());
-        } catch (TownyException e) {
+        } catch (Exception e) {
             p.teleport(Bukkit.getServer().getWorlds().get(0).getSpawnLocation());
         }
         Chatty.SendMessage(p,"You have been brought back to life.");

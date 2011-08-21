@@ -14,7 +14,8 @@ public class Crime
 		MURDER,
 		THEFT,
 		WEAPONS,
-        ASSAULT
+        ASSAULT,
+        POISONING
 	}
 
 	public Crime(Player suspect, CrimeType type)
